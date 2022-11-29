@@ -1,5 +1,7 @@
 require 'ruby2d'
 GRID_SIZE = 20
+GRID_WIDTH =Window.width/GRID_SIZE
+GRID_HEIGHT=Window.height/GRID_SIZE
 set background: 'navy'
 set fps_cap: 20
 class Snake
@@ -20,13 +22,13 @@ class Snake
     @position.shift
     case @direction
     when 'down'
-      @position.push([head[0], head[1] + 1])
+      @position.push(new_coords(head[0], head[1] + 1))
     when 'up'
-      @position.push([head[0], head[1] - 1])
+      @position.push(new_coords(head[0], head[1] - 1))
     when 'left'
-      @position.push([head[0] - 1, head[1]])
+      @position.push(new_coords(head[0] - 1, head[1]))
     when 'right'
-      @position.push([head[0] + 1, head[1]])
+      @position.push(new_coords(head[0] + 1, head[1]))
     end
   end
 
@@ -40,6 +42,10 @@ class Snake
   end
 
   private
+
+  def new_coords(x,y)
+  [x%GRID_WIDTH, y%GRID_HEIGHT]
+  end  
 
   def head
     @position.last
